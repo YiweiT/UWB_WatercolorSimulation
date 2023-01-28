@@ -216,13 +216,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 647832067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73ea8a7e0b380c442858f63b8d6f0ca6, type: 3}
+  m_Script: {fileID: 11500000, guid: bba444b3ea1f5b846af7a71aba625638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
   _rt: {fileID: 0}
-  paintShader: {fileID: 4800000, guid: ada3c1a82ba6da6408f1b9c68421ae51, type: 3}
-  fillShader: {fileID: 4800000, guid: f03dcf9ed3f720447873cd79f4d5061d, type: 3}
+  paintShader: {fileID: 4800000, guid: 4719b7a35b46ccf4b9d77e1906db35c9, type: 3}
+  fillShader: {fileID: 4800000, guid: f2e657fa3dbf99a44b0a1d5aa93831e8, type: 3}
   white: {fileID: 0}
 --- !u!1 &868822732
 GameObject:
