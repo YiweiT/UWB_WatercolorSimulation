@@ -68,7 +68,7 @@ public class DrawSaved : MonoBehaviour
     void OnGUI()
     {
         if(!Event.current.type.Equals(EventType.Repaint)) return;
-        Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _rt, _paintMat);
+        Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _rt);
     }
 
     RenderTexture CreateRenderTexture (int width, int height) {
