@@ -3,6 +3,7 @@ In this unity project, there are three folders under Scenes folder, and each of 
 - Scene0_OnGUI
 - Scene0_PrevNotSave
 - Scene1_PrevSaved
+= Scene1_temp2
 
 ### Scene0_PrevNotSave
 In this scene, ClickShow.cs script is attached to the main camera and responsible for coloring pixels when mouse clicked on the game window. It mainly uses Graphics.Blit function in the OnRenderImage function to render image on the camera.
@@ -12,3 +13,6 @@ Drawing.cs is attached to the main camera, in which the rendering process is wri
 
 ### Scene1_PrevSaved
 In this scene, the previous drawn points are stored and shown when mouse drags. DrawSaved.cs is the script attached to the main camera. The rendering process is done in OnGUI function. It renders the updated render texture to the screen.
+
+### Scene1_temp2
+In this scene, the Drawing2.cs script is attached to the main camera and responsible for the drawing activity. Also in this scene, the main process is to render on the render texture when mouse button is down and assign the result render texture to the Raw Image texture.
