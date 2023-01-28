@@ -220,6 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+  _penColor: {r: 0, g: 0, b: 0, a: 1}
+  _penSize: 0.02
   _rt: {fileID: 0}
   paintShader: {fileID: 4800000, guid: 4719b7a35b46ccf4b9d77e1906db35c9, type: 3}
   fillShader: {fileID: 4800000, guid: f2e657fa3dbf99a44b0a1d5aa93831e8, type: 3}

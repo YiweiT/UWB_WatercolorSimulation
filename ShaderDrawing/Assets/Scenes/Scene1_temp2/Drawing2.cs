@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DrawSaved : MonoBehaviour
+public class Drawing2 : MonoBehaviour
 {
     public bool isDragging;
+    public RawImage displayImg;
     public Color _penColor = Color.black;
     public float _penSize = 0.02f;
     public RenderTexture _rt; // the render texture used to draw on screen in OnGUI function
@@ -12,15 +14,21 @@ public class DrawSaved : MonoBehaviour
     public Shader fillShader;
     public Texture2D white;
     
+  
+    
     Material _paintMat, _fillMat;
     // Start is called before the first frame update
     void Start()
     {
+        displayImg.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        
         isDragging = false;
         _rt = CreateRenderTexture(Screen.width, Screen.height);
         _paintMat = new Material(paintShader);
         _fillMat = new Material(fillShader);
         Graphics.Blit(null, _rt, _fillMat);
+
+        displayImg.texture = _rt;
 
         white = new Texture2D(1, 1);
 		white.SetPixel(0, 0, Color.white);
@@ -60,6 +68,7 @@ public class DrawSaved : MonoBehaviour
             _rt.Release();
             // swap temp and _rt
             Graphics.Blit(temp, _rt);
+            displayImg.texture = _rt;
             
         } 
         
@@ -71,11 +80,11 @@ public class DrawSaved : MonoBehaviour
     //     Graphics.Blit(src, _rt, _fillMat);
     //     Graphics.Blit(_rt, dest, _paintMat);
     // }
-    void OnGUI()
-    {
-        if(!Event.current.type.Equals(EventType.Repaint)) return;
-        Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _rt);
-    }
+    // void OnGUI()
+    // {
+    //     if(!Event.current.type.Equals(EventType.Repaint)) return;
+    //     Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _rt);
+    // }
 
     RenderTexture CreateRenderTexture (int width, int height) {
 		RenderTexture rt = new RenderTexture(width, height, 0);
