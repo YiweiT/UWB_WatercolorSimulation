@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Scene1_PrevSaved/Scene1.unity
+- path: Assets/Scenes/MRT_Test/Scene_MRT.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

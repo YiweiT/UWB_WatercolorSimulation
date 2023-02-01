@@ -71,10 +71,10 @@ public class ScriptOnQuad : MonoBehaviour
         _paintMat.SetFloat("_y", my);
         Debug.Log("Click: x=" + mx + " y=" + my);
         // HasNewInk = true;
-        _paintMat.SetInteger("_hasNewInk", 1); // this is point-less for now
+        _paintMat.SetInt("_hasNewInk", 1); // this is point-less for now
         Graphics.Blit(null, _rt, _paintMat); // draw with paintMat
         Graphics.Blit(_rt, _prt); // make a copy of what we currently have
-        _paintMat.SetInteger("_hasNewInk", 0);
+        _paintMat.SetInt("_hasNewInk", 0);
     }
 
     RenderTexture CreateRenderTexture (int width, int height) {
