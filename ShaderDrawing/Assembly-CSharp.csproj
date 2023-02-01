@@ -37,15 +37,20 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scenes\Scene0_OnGUI\Drawing.cs" />
-     <Compile Include="Assets\Scenes\Scene0_PrevNotSaved\ClickShow.cs" />
      <Compile Include="Assets\Scenes\Scene1_PrevSaved\DrawSaved.cs" />
+     <Compile Include="Assets\Scenes\Scene0_PrevNotSaved\ClickShow.cs" />
      <Compile Include="Assets\Scenes\Scene1_temp2\Drawing2.cs" />
+     <Compile Include="Assets\Scenes\MRT_Test\MRT_Test.cs" />
+     <Compile Include="Assets\Scenes\MRT_Test\canvasMaterialLoader.cs" />
      <None Include="Assets\Scenes\Scene0_OnGUI\Fill.shader" />
+     <None Include="Assets\Scenes\MRT_Test\SimpleShowTexture.shader" />
      <None Include="Assets\Scenes\Scene1_PrevSaved\Fill.shader" />
      <None Include="Assets\Scenes\Scene0_PrevNotSaved\Paint.shader" />
      <None Include="Assets\Scenes\Scene1_PrevSaved\Paint.shader" />
      <None Include="Assets\Scenes\Scene0_PrevNotSaved\Fill.shader" />
+     <None Include="Assets\Scenes\MRT_Test\Fill.shader" />
      <None Include="Assets\Scenes\Scene1_temp2\Fill.shader" />
+     <None Include="Assets\Scenes\MRT_Test\Paint_MRT.shader" />
      <None Include="Assets\Scenes\Scene0_OnGUI\Paint.shader" />
      <None Include="Assets\Scenes\Scene1_temp2\Paint.shader" />
     <Reference Include="UnityEngine">

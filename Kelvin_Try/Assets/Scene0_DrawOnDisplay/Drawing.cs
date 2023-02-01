@@ -25,7 +25,7 @@ public class Drawing : MonoBehaviour
         _fillMat = new Material(fillShader);
 
         // init _rt by fillMat
-        _fillMat.SetColor("_Color", Color.blue);
+        _fillMat.SetColor("_Color", Color.white);
         Graphics.Blit(null, _rt, _fillMat);
         Graphics.Blit(null, _prt, _fillMat);
 
@@ -52,11 +52,11 @@ public class Drawing : MonoBehaviour
             Debug.Log("x: " + mx + ", y: " + my);
             _paintMat.SetFloat("_x", mx);
             _paintMat.SetFloat("_y", my);
-            _paintMat.SetInteger("_hasNewInk", 1);
+            _paintMat.SetInt("_hasNewInk", 1);
             
             Graphics.Blit(null, _rt, _paintMat);
             Graphics.Blit(_rt, _prt); // save current
-            _paintMat.SetInteger("_hasNewInk", 0);
+            _paintMat.SetInt("_hasNewInk", 0);
         } 
         
 
