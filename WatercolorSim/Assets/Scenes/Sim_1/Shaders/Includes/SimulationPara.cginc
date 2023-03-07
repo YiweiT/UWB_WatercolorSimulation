@@ -14,5 +14,15 @@ float2 e6 = float2(-1, 1);
 float2 e7 = float2(-1, -1);
 float2 e8 = float2(1, -1);
 
+// constant
+float eps_b = 0.00005; // Evoparation rate at boundary
+float eps = 0.005; // Evoparation rate
+float beta = 1; // water capacity of cell
+float lambda = 0.1; // range [0.1, 0.6], used in collision step
+float theta = 0.1; // min amount of water to flow - used in boundary update step 2
+float _recepitivity = 0.3; // recepitivity parameter - used in ws determine in step 1
+float _baseMask = 0.5; // base value for ws - step 1
+
+
 
 

@@ -45,7 +45,7 @@ public class PerlinNoise : MonoBehaviour
             renderer.material.mainTexture = rt;
         } else {
             // renderer.material.mainTexture = GenerateTexture();
-            tex = generator.GeneratePerlinNoiseTexture(scale);
+            tex = generator.GeneratePerlinNoiseTexture(scale, 0);
 
             renderer.material.mainTexture = tex;
         }

@@ -38,7 +38,7 @@ public class StreamingTest_NSEW : MonoBehaviour
         // Generate Perlin Noise for height field
         RandomTextureGenerator g = new RandomTextureGenerator(canvasSize, canvasSize);
         g.SetBounds(heightLowerBound, heightUpperBound);
-        Texture2D perlineNoise = g.GeneratePerlinNoiseTexture(heightScale);
+        Texture2D perlineNoise = g.GeneratePerlinNoiseTexture(heightScale, 0);
         Graphics.Blit(perlineNoise, debugRT2);
 
         paintMat = new Material(paintShader);
@@ -131,7 +131,7 @@ public class StreamingTest_NSEW : MonoBehaviour
     RenderTexture CreateRenderTexture (int width, int height) {
 		RenderTexture rt = new RenderTexture(width, height, 0);
 		rt.format = RenderTextureFormat.ARGBFloat;
-		rt.wrapMode = TextureWrapMode.Repeat;
+		rt.wrapMode = TextureWrapMode.Clamp;
 		rt.filterMode = FilterMode.Point;
 		rt.Create();
         // Graphics.Blit(null, _rt[i], _fillMat);

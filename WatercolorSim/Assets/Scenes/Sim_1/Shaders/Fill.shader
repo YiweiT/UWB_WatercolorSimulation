@@ -1,4 +1,4 @@
-Shader "Custom/Fill"
+Shader "Sim/Fill"
 {
     Properties
     {

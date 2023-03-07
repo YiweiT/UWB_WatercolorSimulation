@@ -36,7 +36,7 @@ public class BoundaryTest : MonoBehaviour
         // Generate Perlin Noise for height field
         RandomTextureGenerator g = new RandomTextureGenerator(canvasSize, canvasSize);
         g.SetBounds(heightLowerBound, heightUpperBound);
-        Texture2D perlineNoise = g.GeneratePerlinNoiseTexture(heightScale);
+        Texture2D perlineNoise = g.GeneratePerlinNoiseTexture(heightScale, 0);
         Graphics.Blit(perlineNoise, debugRT2);
 
         paintMat = new Material(paintShader);

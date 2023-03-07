@@ -1,9 +1,9 @@
-Shader "Custom/BoundaryUpdate"
+Shader "Sim/BoundaryUpdate"
 {
     Properties
     {
         // _MainTex ("Texture", 2D) = "white" {}
-        _Theta ("Theta", Range(0.05, 0.2)) = 0.1
+        // _Theta ("Theta", Range(0.05, 0.2)) = 0.1
     }
 
     CGINCLUDE
@@ -32,13 +32,15 @@ Shader "Custom/BoundaryUpdate"
     sampler2D _MainTex;
     sampler2D _RefTex2, _RefTex3, _RefTex4;
     float4 _RefTex2_TexelSize;
-    float _Theta;
+    // float _Theta;
 
     // Check whether the given cell has enough amount of water (rho) that can flow
     int hasEnoughWater(sampler2D tex, float2 uv)
     {
+        #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
+
         float rho = tex2D(tex, uv).g;
-        if (rho < _Theta)
+        if (rho < theta)
         {
             return 0;
         } else {
@@ -86,8 +88,10 @@ Shader "Custom/BoundaryUpdate"
            }
             // else: k = h
         }
-        val.a = max(val.a - ref2.a, 0);
-        val.r = val.a; // debugging
+        val.a = max(val.a - ref2.a, 0); // update ws
+        val.b = rho; // update rho'
+        // val.r = val.a; // debugging
+        
         return val;
     }
 

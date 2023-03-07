@@ -1,4 +1,4 @@
-Shader "Custom/PaintF2"
+Shader "Test/PaintA"
 {
     Properties
     {
@@ -28,25 +28,32 @@ Shader "Custom/PaintF2"
         return o;
     }
 
-    sampler2D _MainTex, _PrevTex;
+    sampler2D _MainTex, _PrevTex0, _PrevTex1, _PrevTex3;
     float _x, _y, _w, _h, _val;
 
-    fixed4 drawCircle (v2f i) : SV_Target
+    fixed4 drawTex0 (v2f i) : SV_Target
     {
-        fixed4 col = tex2D(_PrevTex, i.uv);
+        fixed4 col = tex2D(_PrevTex0, i.uv);
         if (distance(i.uv, float2(_x, _y)) < _w) {
             col += float4(_val/9, _val/9, _val/9, _val/9);
         }
         return col;
     }
 
-    fixed4 drawRect (v2f i) : SV_Target
+    fixed4 drawTex1 (v2f i) : SV_Target
     {
-        fixed4 col = tex2D(_PrevTex, i.uv);
-        if (i.uv.x - _x >= 0 && i.uv.y - _y >= 0) {
-            if (i.uv.x - _x < _w && i.uv.y - _y < _h) {
-                col += float4(_val/9, _val/9, _val/9, _val/9);
-            }
+        fixed4 col = tex2D(_PrevTex1, i.uv);
+        if (distance(i.uv, float2(_x, _y)) < _w) {
+            col += float4(_val/9, _val/9, _val/9, _val/9);
+        }
+        return col;
+    }
+
+    fixed4 drawTex3 (v2f i) : SV_Target
+    {
+        fixed4 col = tex2D(_PrevTex3, i.uv);
+        if (distance(i.uv, float2(_x, _y)) < _w) {
+            col.r += _val/9;
         }
         return col;
     }
@@ -63,7 +70,7 @@ Shader "Custom/PaintF2"
         {
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment drawCircle
+            #pragma fragment drawTex0
             ENDCG
         }
 
@@ -71,7 +78,14 @@ Shader "Custom/PaintF2"
         {   
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment drawRect
+            #pragma fragment drawTex1
+            ENDCG
+        }
+        Pass
+        {   
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment drawTex3
             ENDCG
         }
     }

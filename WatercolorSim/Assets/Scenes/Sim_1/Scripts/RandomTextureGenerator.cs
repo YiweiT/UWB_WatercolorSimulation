@@ -61,7 +61,7 @@ public class RandomTextureGenerator
 
     // public Texture2D GenerateDefinedRho()
 
-    public Texture2D GeneratePerlinNoiseTexture(float scale)
+    public Texture2D GeneratePerlinNoiseTexture(float scale, int pos)
     {
         Texture2D _tex = new Texture2D(_width, _height);
        
@@ -69,7 +69,7 @@ public class RandomTextureGenerator
         {
             for (int y = 0; y < _height; y++)
             {
-                Color color = CalculateColor(x, y, scale);
+                Color color = CalculateColor(x, y, scale, pos);
                 _tex.SetPixel(x, y, color);
             }
         }
@@ -78,12 +78,29 @@ public class RandomTextureGenerator
         return _tex;
     }
 
-    Color CalculateColor(int x, int y, float scale)
+    Color CalculateColor(int x, int y, float scale, int pos)
     {
         float xCoord = (float) x / _width * scale;
         float yCoord = (float) y / _height * scale;
         float sample = Mathf.PerlinNoise(xCoord, yCoord);
         sample = Mathf.Lerp(_lowerBound, _upperBound, sample);
-        return new Color(sample, 0f, 0f, 0f);
+        Color output = new Color(0f, 0f, 0f, 0f);
+        switch (pos)
+        {
+            case 0:
+                output.r = sample;
+                break;
+            case 1:
+                output.g = sample;
+                break;
+            case 2:
+                output.b = sample;
+                break;
+            case 3:
+                output.a = sample;
+                break;
+            
+        }
+        return output;
     }
 }

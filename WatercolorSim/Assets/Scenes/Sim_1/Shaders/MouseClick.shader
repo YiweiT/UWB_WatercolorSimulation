@@ -1,4 +1,4 @@
-Shader "Custom/MouseClick"
+Shader "Sim/MouseClick"
 {
     Properties
     {
@@ -6,9 +6,9 @@ Shader "Custom/MouseClick"
         _tex1 ("Reference Texture 1", 2D) = "" {} // vx, vy, rho, wf -- using rho
         _tex2 ("Reference Texture 2", 2D) = "" {} // Ps, Pf, Px -- updating Ps
         _tex3 ("Reference Texture 3", 2D) = "" {} // f0, k, rho', ws -- updating ws
-        _recepitivity ("Recepitivity Parameter", Range(0.3, 1)) = 0.3
-        _baseMask ("Base Mask", Float) = 0.3
-        _penCol ("Pen Color", Color) = (1, 0, 0, 1)
+        // _recepitivity ("Recepitivity Parameter", Range(0.3, 1)) = 0.3
+        // _baseMask ("Base Mask", Float) = 0.3
+        // _penCol ("Pen Color", Color) = (1, 0, 0, 1)
     }
     CGINCLUDE
 
@@ -35,7 +35,8 @@ Shader "Custom/MouseClick"
     }
 
     sampler2D _ColTex, _RefTex2, _PrevTex, _RefTex3;
-    float _x, _y, _brushSize, _recepitivity, _baseMask;
+    float _x, _y, _brushSize;
+    // float _recepitivity, _baseMask;
     float4 _penCol;
     int _hasNewInk;
 
@@ -43,6 +44,7 @@ Shader "Custom/MouseClick"
     // update ws, the amount of water applied to the surface layer of the paper
     fixed4 updateWS (v2f i) : SV_Target
     {
+        #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
         // r   g   b    a
         // vx, vy, rho, ws
         float4 ws = tex2D(_RefTex3, i.uv);
@@ -64,7 +66,9 @@ Shader "Custom/MouseClick"
     // Step 1.21, when mouse click on the drawing canvas, 
     // Update the pigment concentration on the surface layer
     fixed4 updatePS (v2f i) : SV_Target
-    {   // r   g   b    a
+    { 
+        #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
+        // r   g   b    a
         // Ps, Pf, Px
         float4 ps = tex2D(_ColTex, i.uv);
         float rho = tex2D(_RefTex2, i.uv).b;
@@ -84,14 +88,21 @@ Shader "Custom/MouseClick"
 
     // Display purpose
     fixed4 display (v2f i) : SV_Target
-    {   // r   g   b    a
+    {
+        #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
+        // r   g   b    a
         // Ps, Pf, Px
         fixed4 col = tex2D(_PrevTex, i.uv);
+        float rho = tex2D(_RefTex2, i.uv).b;
+        // ps.b = rho; // for debugging
         if (_hasNewInk == 1) 
         {
             if (distance(i.uv, float2(_x, _y)) < _brushSize)
             {
-                col = float4(_baseMask, 0, 0, 1);
+                float addVal = max(1- rho / _recepitivity, _baseMask);
+                col += float4(addVal, addVal, addVal, 1);
+                // values.r += max(1 - rho / _recepitivity, _baseMask);
+                // values.b = 0;
             }
         }
         return col;

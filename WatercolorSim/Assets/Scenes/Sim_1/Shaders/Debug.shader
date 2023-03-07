@@ -1,4 +1,4 @@
-Shader "Custom/Debug"
+Shader "Debug/Debug"
 {
     Properties
     {

@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class MainFunction : MonoBehaviour
+public class StreamingAllDir : MonoBehaviour
 {
     public enum DrawShape
     {
         Circle = 0, Rectangle = 1
     };
     
-    public GameObject debug1, debug2;
+    public GameObject debug1, debug2, debug3;
     public Shader paintShader, fillShader, boundaryShader, streamShader;
     // user input
     public int canvasSize = 256;
@@ -25,21 +23,23 @@ public class MainFunction : MonoBehaviour
     
 
     Material paintMat, fillMat, myMat, boundaryMat, streamMat;
-    RenderTexture rt, debugRT1, debugRT2;
+    RenderTexture rt, debugRT1, debugRT2, debugRT3, heightField;
     bool isDragging;
     RaycastHit hitInfo = new RaycastHit();
     // Start is called before the first frame update
     void Start()
     {
         rt = CreateRenderTexture(canvasSize, canvasSize);
-        debugRT1= CreateRenderTexture(canvasSize, canvasSize);
-        debugRT2= CreateRenderTexture(canvasSize, canvasSize);
+        debugRT1= CreateRenderTexture(canvasSize, canvasSize); 
+        debugRT2= CreateRenderTexture(canvasSize, canvasSize); // NWSE
+        debugRT3= CreateRenderTexture(canvasSize, canvasSize); // diagonal
+        heightField= CreateRenderTexture(canvasSize, canvasSize);
 
         // Generate Perlin Noise for height field
         RandomTextureGenerator g = new RandomTextureGenerator(canvasSize, canvasSize);
         g.SetBounds(heightLowerBound, heightUpperBound);
         Texture2D perlineNoise = g.GeneratePerlinNoiseTexture(heightScale, 0);
-        Graphics.Blit(perlineNoise, debugRT2);
+        Graphics.Blit(perlineNoise, heightField);
 
         paintMat = new Material(paintShader);
         fillMat = new Material(fillShader);
@@ -55,14 +55,16 @@ public class MainFunction : MonoBehaviour
 
         debug1.GetComponent<Renderer>().material.SetTexture("_MainTex", debugRT1);
         debug2.GetComponent<Renderer>().material.SetTexture("_MainTex", debugRT2);
+        debug3.GetComponent<Renderer>().material.SetTexture("_MainTex", debugRT3);
         
         paintMat.SetTexture("_PrevTex", rt);
 
-        boundaryMat.SetTexture("_RefTex2", rt); // f2, f4
+        boundaryMat.SetTexture("_RefTex2", rt); // 
         boundaryMat.SetTexture("_RefTex3", debugRT1); // k
-        boundaryMat.SetTexture("_RefTex4", debugRT2); // h
+        boundaryMat.SetTexture("_RefTex4", heightField); // h
 
-        streamMat.SetTexture("_RefTex0", rt); // f2, f4
+        streamMat.SetTexture("_RefTex0", debugRT2); // straight
+        streamMat.SetTexture("_RefTex1", debugRT3); // diagonal
         streamMat.SetTexture("_RefTex3", debugRT1); // k
 
     }
@@ -78,9 +80,13 @@ public class MainFunction : MonoBehaviour
     void Streaming()
     {
          RenderTexture temp = RenderTexture.GetTemporary(canvasSize, canvasSize, 0);
-         Graphics.Blit(null, temp, streamMat);
-         Graphics.Blit(temp, rt);
+         RenderTexture temp1 = RenderTexture.GetTemporary(canvasSize, canvasSize, 0);
+         Graphics.Blit(null, temp, streamMat, 0); // straight directions
+         Graphics.Blit(temp, debugRT2);
+         Graphics.Blit(null, temp1, streamMat, 1); // diagonal directions
+         Graphics.Blit(temp1, debugRT3);
          RenderTexture.ReleaseTemporary(temp);
+         RenderTexture.ReleaseTemporary(temp1);
     }
 
     void DetectBoundary()
@@ -121,9 +127,16 @@ public class MainFunction : MonoBehaviour
             // paintMat.SetInt("_hasNewInk", 1);
             
             RenderTexture temp = RenderTexture.GetTemporary(canvasSize, canvasSize, 0);
+            RenderTexture temp2 = RenderTexture.GetTemporary(canvasSize, canvasSize, 0);
+            // assigning rho 
             Graphics.Blit(null, temp, paintMat, drawShape.GetHashCode());
             Graphics.Blit(temp, rt);
+            // distributing rho to 9 distribution functions
+            Graphics.Blit(null, temp2, paintMat, 2);
+            Graphics.Blit(temp2, debugRT2);
+            Graphics.Blit(temp2, debugRT3);
             RenderTexture.ReleaseTemporary(temp);
+            RenderTexture.ReleaseTemporary(temp2);
 
         }        
     }
