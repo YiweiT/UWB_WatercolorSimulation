@@ -35,6 +35,14 @@ public class Operator : MonoBehaviour
     public GameObject[] debugDisplay = new GameObject[krt];
     RenderTexture[] debugRT = new RenderTexture[krt];
 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        MatInitiate();
+        RTSetUp();
+        MatSetUp();
+    }
     void RTSetUp()
     {
 
@@ -53,7 +61,9 @@ public class Operator : MonoBehaviour
             Graphics.Blit(null, rt[i], fillMat);
             Graphics.Blit(null, rtc[i], fillMat);
             Graphics.Blit(null, debugRT[i], fillMat);
-            
+        
+            // debugging ...
+            debugDisplay[i].GetComponent<Renderer>().material.SetTexture("_MainTex", rt[i]);
         }   
 
         // Generate height field
@@ -62,12 +72,6 @@ public class Operator : MonoBehaviour
         Texture2D perlinNoise = g.GeneratePerlinNoiseTexture(heightScale, 2);
         Graphics.Blit(perlinNoise, rt[3]);
         Graphics.Blit(perlinNoise, rtc[3]);
-
-        // debugging ...
-        for (int i = 0; i < krt; i++)
-        {
-            debugDisplay[i].GetComponent<Renderer>().material.SetTexture("_MainTex", rt[i]);
-        }
     }
 
     void MatInitiate()
@@ -106,21 +110,13 @@ public class Operator : MonoBehaviour
 
           
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        MatInitiate();
-        RTSetUp();
-        MatSetUp();
-    }
-
     // Update is called once per frame
     void Update()
     {
         MouseDragging();
         BoundaryUpdate();
         Streaming();
-        Colliding();
+        // Colliding();
 
         // debugging ...
         Debugging();

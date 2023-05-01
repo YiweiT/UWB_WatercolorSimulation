@@ -341,7 +341,7 @@ MonoBehaviour:
   debug1: {fileID: 1932600225}
   debug2: {fileID: 1391155083}
   debug3: {fileID: 498309777}
-  paintShader: {fileID: 4800000, guid: 16fac3e1ef5824c4f9148ba7baafff85, type: 3}
+  paintShader: {fileID: 4800000, guid: 36520bd0190d30b42af9b43107b1ff71, type: 3}
   fillShader: {fileID: 4800000, guid: f868f812cfb82bf4f881ba30f4d2c48d, type: 3}
   boundaryShader: {fileID: 4800000, guid: a89cce461d501f740b75916aab04253d, type: 3}
   streamShader: {fileID: 4800000, guid: ef3d69deb43d18646b2d75e1bf16b40e, type: 3}

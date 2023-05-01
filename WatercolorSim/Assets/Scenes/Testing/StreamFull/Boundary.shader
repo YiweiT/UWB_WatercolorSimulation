@@ -84,7 +84,7 @@ Shader "StreamFull/Boundary"
            }
             // else: k = h
         }
-        // val.a = max(val.a - ref2.a, 0); // update ws
+        val.a = max(val.a - ref2.a, 0); // update ws
         // val.b = rho; // update rho'
         // val.r = val.a; // debugging
         

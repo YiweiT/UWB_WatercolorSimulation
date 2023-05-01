@@ -39,11 +39,11 @@
      <Compile Include="Assets\Scenes\Mixbox\colorMix.cs" />
      <Compile Include="Assets\Scenes\Scene0_OnGUI\Drawing.cs" />
      <Compile Include="Assets\Scenes\Scene1_PrevSaved\DrawSaved.cs" />
+     <Compile Include="Assets\Scenes\Shader_testing\AlphaChange.cs" />
      <Compile Include="Assets\Scenes\Scene0_PrevNotSaved\ClickShow.cs" />
      <Compile Include="Assets\Scenes\Scene1_temp2\Drawing2.cs" />
      <Compile Include="Assets\Scenes\MRT_Test\MRT_Test.cs" />
      <Compile Include="Assets\Scenes\MRT_Test\canvasMaterialLoader.cs" />
-     <Compile Include="Assets\Scenes\Shader_testing\AlphaChange.cs" />
      <None Include="Assets\Scenes\Scene0_OnGUI\Fill.shader" />
      <None Include="Assets\Scenes\MRT_Test\SimpleShowTexture.shader" />
      <None Include="Assets\Scenes\Scene1_PrevSaved\Fill.shader" />

@@ -40,7 +40,7 @@ Shader "StreamFull/Paint"
         // {
         //     col += float4(_val, _val, _val, _val);
         // }
-        col += float4(_val, _val, _val, _val) * step(-1 * _size, -1 * distance(i.uv, float2(_x, _y)));
+        col += float4(0.5, 0.5, 0.5, 0.5) * step(-1 * _size, -1 * distance(i.uv, float2(_x, _y)));
         return col;
     }
 

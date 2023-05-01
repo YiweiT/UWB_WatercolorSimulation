@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97ee8ff5228e9d46b5dec1ba25c17bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
+  mode: 0
   ratio: {fileID: 1434998952}
   ratioText: {fileID: 2011003666}
   col1Img: {fileID: 1974178573}

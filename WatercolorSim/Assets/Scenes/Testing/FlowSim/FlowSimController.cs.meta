@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 183e823dcd09c4745b68ef7a540bfc3b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - quad: {instanceID: 0}
+  - debugShader: {fileID: 4800000, guid: 73712a13c0b94b94b98038714fe7f271, type: 3}
+  - paintShader: {fileID: 4800000, guid: 43d145c19c1de204ebc6db3db57ff426, type: 3}
+  - boundaryShader: {fileID: 4800000, guid: 069809b80bdfdab48bc96943ba52ec0a, type: 3}
+  - streamShader: {fileID: 4800000, guid: c0541dbcd02bd8b40a5a98cba3f81fd4, type: 3}
+  - rho_vUpdateShader: {fileID: 4800000, guid: 78bb24a641857fa4485ca600709088e5, type: 3}
+  - collideShader: {fileID: 4800000, guid: bc11231bc2023c24bb4f3ad0a9000151, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

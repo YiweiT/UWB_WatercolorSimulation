@@ -27,7 +27,7 @@ Shader "Sim/Density_VelocityUpdate"
         return o;
     }
 
-    sampler2D _RefTex0, _RefTex1, _RefTex2, _RefTex3;
+    sampler2D _RefTex0, _RefTex1, _RefTex3;
 
     fixed4 updateDensity_velocity_wf (v2f i) : SV_Target
     {
