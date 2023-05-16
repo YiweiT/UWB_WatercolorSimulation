@@ -7,26 +7,6 @@ Shader "StreamFull/Collision"
     CGINCLUDE
     #include "UnityCG.cginc"
 
-    struct appdata
-    {
-        float4 vertex : POSITION;
-        float2 uv : TEXCOORD0;
-    };
-
-    struct v2f
-    {
-        float2 uv : TEXCOORD0;
-        float4 vertex : SV_POSITION;
-    };
-
-    v2f vert (appdata v)
-    {
-        v2f o;
-        o.vertex = UnityObjectToClipPos(v.vertex);
-        o.uv = v.uv;
-        return o;
-    }
-
     sampler2D _RefTex0, _RefTex1, _RefTex2,  _RefTex3;
     float omega;
 
@@ -61,7 +41,7 @@ Shader "StreamFull/Collision"
         
         return weight * rho * (1 + alpha * (c_squ * dot(dir, velocity) + 0.5 * pow(dot(dir, velocity)* c_squ , 2) - 0.5 * c_squ * dot(velocity, velocity)));
     }
-    fixed4 colliding_f14 (v2f i) : SV_Target
+    fixed4 colliding_f14 (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
         
@@ -89,7 +69,7 @@ Shader "StreamFull/Collision"
         return float4(new_f1, new_f2, new_f3, new_f4);
     }
 
-    fixed4 colliding_f58 (v2f i) : SV_Target
+    fixed4 colliding_f58 (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
  
@@ -115,7 +95,7 @@ Shader "StreamFull/Collision"
         return float4(new_f5, new_f6, new_f7, new_f8);
     }
 
-    fixed4 colliding_f0 (v2f i) : SV_Target
+    fixed4 colliding_f0 (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
 
@@ -144,21 +124,21 @@ Shader "StreamFull/Collision"
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment colliding_f14
             ENDCG
         }
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment colliding_f58
             ENDCG
         }
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment colliding_f0
             ENDCG
         }

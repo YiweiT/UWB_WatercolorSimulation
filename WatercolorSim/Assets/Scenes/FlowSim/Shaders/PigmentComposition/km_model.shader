@@ -1,4 +1,4 @@
-Shader "Debug/BackgroundKM"
+Shader "Rendering/KM"
 {
     Properties
     {

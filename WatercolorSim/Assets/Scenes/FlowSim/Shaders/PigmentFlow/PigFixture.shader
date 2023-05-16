@@ -1,4 +1,4 @@
-Shader "WaterColorSim/PigFixture"
+Shader "PigMotion/PigFixture"
 {
     Properties
     {
@@ -6,26 +6,6 @@ Shader "WaterColorSim/PigFixture"
     }
     CGINCLUDE
     #include "UnityCG.cginc"
-
-    struct appdata
-    {
-        float4 vertex : POSITION;
-        float2 uv : TEXCOORD0;
-    };
-
-    struct v2f
-    {
-        float2 uv : TEXCOORD0;
-        float4 vertex : SV_POSITION;
-    };
-
-    v2f vert (appdata v)
-    {
-        v2f o;
-        o.vertex = UnityObjectToClipPos(v.vertex);
-        o.uv = v.uv;
-        return o;
-    }
 
     sampler2D _ColTex, _tex2, _tex3, _tex0, _tex1, _tex4;
     float drynessPara, deposite_base;
@@ -50,7 +30,7 @@ Shader "WaterColorSim/PigFixture"
         return (f1*e1 + f2*e2 + f3*e3 + f4*e4 + f5*e5 + f6*e6 + f7*e7 + f8*e8) / rho_0;
     }
 
-    fixed4 pigmentFixture (v2f i) : SV_Target
+    fixed4 pigmentFixture (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
 
@@ -82,8 +62,9 @@ Shader "WaterColorSim/PigFixture"
 
 
         // fixFactor = max(fixFactor * (1 - smoothstep(0, drynessPara, rho)), deposite_base);      
-        // fixFactor = clamp(fixFactor * (1 - smoothstep(0, drynessPara, rho)), 0.05, deposite_base);
-        fixFactor = lerp(fixFactor * (1 - smoothstep(0, drynessPara, rho)), 0.05, deposite_base);
+        fixFactor = clamp(fixFactor * (1 - smoothstep(0, drynessPara, rho)), 0.05, deposite_base);
+        // fixFactor = lerp(fixFactor * (1 - smoothstep(0, drynessPara, rho)), 0.05, deposite_base);
+         fixFactor = lerp( 0.05, deposite_base, fixFactor * (1 - smoothstep(0, drynessPara, rho)));
         // fixFactor = 0.1;
         pf = pf - fixFactor * pf - backrun;
         px = px + fixFactor * pf + backrun;
@@ -102,7 +83,7 @@ Shader "WaterColorSim/PigFixture"
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment pigmentFixture
             ENDCG
         }

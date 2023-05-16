@@ -38,8 +38,8 @@ public class FlowSimController : MonoBehaviour
     public DisplayOpt[] displayOpts = new DisplayOpt[krt];
     public DisplayOpt colTexOpt;
     public float colTexMultiplier;
-    public Shader fillShader, debugShader, paintShader, boundaryShader, streamShader, rho_vUpdateShader, collideShader, pigSupplyShader, pigAdvectShader, pigFixtureShader, kmShader, compShader, bgShader;
-    Material fillMat, debugMat, paintMat, boundaryMat, streamMat, rho_vUpdateMat, collideMat, pigSupplyMat, pigAdvectMat, pigFixtureMat, kmMat, compMat, bgMat;
+    public Shader fillShader, debugShader, paintShader, boundaryShader, streamShader, rho_vUpdateShader, collideShader, pigSupplyShader, pigAdvectShader, pigFixtureShader, compShader, kmShader;
+    Material fillMat, debugMat, paintMat, boundaryMat, streamMat, rho_vUpdateMat, collideMat, pigSupplyMat, pigAdvectMat, pigFixtureMat, compMat, kmMat;
     public int canvasSize = 256;
     public PenColor _bgCol;
     [Range(0.01f, 1f)]
@@ -208,7 +208,7 @@ public class FlowSimController : MonoBehaviour
         // Composition
         kmMat = new Material(kmShader);
         compMat = new Material(compShader);
-        bgMat = new Material(bgShader);
+        
 
         // debugging
         debugMat = new Material(debugShader);
@@ -241,7 +241,6 @@ public class FlowSimController : MonoBehaviour
 
         // Pigment Movements
         pigSupplyMat.SetTexture("_tex2", rt[2]);
-        pigSupplyMat.SetTexture("_tex3", rt[3]);
 
         pigAdvectMat.SetTexture("_tex0", rt[0]); // f1 - f4
         pigAdvectMat.SetTexture("_tex1", rt[1]); // f5 - f6
@@ -270,16 +269,16 @@ public class FlowSimController : MonoBehaviour
         // Debug.Log("chosen bg color: " + _bgCol.ToString() );
 
 
-        bgMat.SetVector("_S", S[c]);
-        bgMat.SetVector("_a", a);
-        bgMat.SetVector("_b", b);
-        bgMat.SetTexture("_noise", noise);
-        bgMat.SetFloat("_offset", offset);
-        bgMat.SetFloat("_mul", mul);
+        kmMat.SetVector("_S", S[c]);
+        kmMat.SetVector("_a", a);
+        kmMat.SetVector("_b", b);
+        kmMat.SetTexture("_noise", noise);
+        kmMat.SetFloat("_offset", offset);
+        kmMat.SetFloat("_mul", mul);
 
-        Graphics.Blit(null, displayTex, bgMat, 0);
-        Graphics.Blit(null, R0c, bgMat, 1);
-        Graphics.Blit(null, T0c, bgMat, 2);
+        Graphics.Blit(null, displayTex, kmMat, 0);
+        Graphics.Blit(null, R0c, kmMat, 1);
+        Graphics.Blit(null, T0c, kmMat, 2);
         // Graphics.Blit(displayTexc, displayTex);
         Graphics.Blit(R0c, R0);
         Graphics.Blit(T0c, T0);
@@ -441,14 +440,10 @@ public class FlowSimController : MonoBehaviour
     {
         foreach (RenderTexture colTex in _colorLayer.Values)
         {
-           
-            
             PigSupply(colTex, _temp);
             PigAdvection(colTex, _temp);
             PigFixture(colTex, _temp);
         }
-
-
     }
 
     void PigSupply(RenderTexture colTex, RenderTexture temp)
@@ -488,7 +483,6 @@ public class FlowSimController : MonoBehaviour
         Background(_bgCol.GetHashCode(), rt[4], bgOffset, bgMul);
         foreach (KeyValuePair<int, RenderTexture> item in _colorLayer)
         {
-            // Background(item.Key, item.Value, 0, 1);
             CompLayers(item.Key, item.Value, 0, 1);
         }
     }
@@ -498,15 +492,15 @@ public class FlowSimController : MonoBehaviour
         Vector4 b = Sqrt2Vector4_ComponentWise(Vector4.Scale(a, a) - Vector4.one);
 
         // Calculate Layer R1, T1
-        bgMat.SetVector("_S", S[c]);
-        bgMat.SetVector("_a", a);
-        bgMat.SetVector("_b", b);
-        bgMat.SetFloat("_offset", offset);
-        bgMat.SetFloat("_mul", mul);
-        bgMat.SetTexture("_noise", noise);
-        Graphics.Blit(null, layerRT, bgMat, 0);
-        Graphics.Blit(null, R1, bgMat, 1);
-        Graphics.Blit(null, T1, bgMat, 2);
+        kmMat.SetVector("_S", S[c]);
+        kmMat.SetVector("_a", a);
+        kmMat.SetVector("_b", b);
+        kmMat.SetFloat("_offset", offset);
+        kmMat.SetFloat("_mul", mul);
+        kmMat.SetTexture("_noise", noise);
+        Graphics.Blit(null, layerRT, kmMat, 0);
+        Graphics.Blit(null, R1, kmMat, 1);
+        Graphics.Blit(null, T1, kmMat, 2);
         
         // Composite two layers
         Graphics.Blit(null, displayTex, compMat, 0);
@@ -515,8 +509,6 @@ public class FlowSimController : MonoBehaviour
 
         Graphics.Blit(R0c, R0);
         Graphics.Blit(T0c, T0);
-        // Graphics.Blit(displayTexc, displayTex);
-
     }
     void Debugging()
     {

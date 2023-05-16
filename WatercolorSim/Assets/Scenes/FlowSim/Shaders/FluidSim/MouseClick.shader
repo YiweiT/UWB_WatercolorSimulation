@@ -8,26 +8,6 @@ Shader "FlowSim/MouseClick"
     CGINCLUDE
     #include "UnityCG.cginc"
 
-    struct appdata
-    {
-        float4 vertex : POSITION;
-        float2 uv : TEXCOORD0;
-    };
-
-    struct v2f
-    {
-        float2 uv : TEXCOORD0;
-        float4 vertex : SV_POSITION;
-    };
-
-    v2f vert (appdata v)
-    {
-        v2f o;
-        o.vertex = UnityObjectToClipPos(v.vertex);
-        o.uv = v.uv;
-        return o;
-    }
-
     sampler2D _mask, _RefTex2, _RefTex3, _ColTex;
     float4 _RefTex3_TexelSize, _ColTex_TexelSize;
     float _x, _y, _size, _pigAmt, _px, _py, _waterAmt;
@@ -44,7 +24,7 @@ Shader "FlowSim/MouseClick"
 
     }
 
-    fixed4 paint (v2f i) : SV_Target
+    fixed4 paint (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
         
@@ -55,7 +35,7 @@ Shader "FlowSim/MouseClick"
         return col;
     }
 
-    fixed4 paint_ws (v2f i) : SV_Target
+    fixed4 paint_ws (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
 
@@ -69,7 +49,7 @@ Shader "FlowSim/MouseClick"
         return ws;
     }
 
-    fixed4 paint_ps (v2f i) : SV_Target
+    fixed4 paint_ps (v2f_img i) : SV_Target
     {
         #include "Assets/Scenes/Sim_1/Shaders/Includes/SimulationPara.cginc"
 
@@ -79,7 +59,7 @@ Shader "FlowSim/MouseClick"
         float2 _offset2 = float2(_offset, _offset);
         // float val = max(1- rho / _recepitivity, _baseMask);
         ps.r += _pigAmt * step(lineSegment(i.uv, float2(_px, _py) - _offset2, float2(_x, _y)), _size * _ColTex_TexelSize.x);
-        // ps.r = max(ps.r - wf, 0); // update ws = max(ws - wf, 0)
+        ps.r = saturate(ps.r);
         return ps;
     }   
     ENDCG
@@ -94,28 +74,21 @@ Shader "FlowSim/MouseClick"
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment paint
             ENDCG
         }
-        // Pass
-        // {
-        //     CGPROGRAM
-        //     #pragma vertex vert
-        //     #pragma fragment paint_c
-        //     ENDCG
-        // }
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment paint_ws
             ENDCG
         }
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert_img
             #pragma fragment paint_ps
             ENDCG
         }

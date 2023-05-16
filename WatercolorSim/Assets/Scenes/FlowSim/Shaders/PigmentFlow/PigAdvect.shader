@@ -1,4 +1,4 @@
-Shader "WaterColorSim/PigAdvection"
+Shader "PigMotion/PigAdvection"
 {
     Properties
     {
