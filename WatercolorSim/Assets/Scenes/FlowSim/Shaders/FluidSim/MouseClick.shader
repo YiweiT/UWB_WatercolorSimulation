@@ -46,6 +46,7 @@ Shader "FlowSim/MouseClick"
         // float val = max(1- rho / _recepitivity, _waterAmt);
         ws.a += _waterAmt * step(lineSegment(i.uv, float2(_px, _py) - _offset2, float2(_x, _y)), _size * _RefTex3_TexelSize.x);
         // ws.a = max(ws.a - wf, 0); // update ws = max(ws - wf, 0)
+        // ws.a = saturate(ws.a);
         return ws;
     }
 
@@ -59,7 +60,7 @@ Shader "FlowSim/MouseClick"
         float2 _offset2 = float2(_offset, _offset);
         // float val = max(1- rho / _recepitivity, _baseMask);
         ps.r += _pigAmt * step(lineSegment(i.uv, float2(_px, _py) - _offset2, float2(_x, _y)), _size * _ColTex_TexelSize.x);
-        ps.r = saturate(ps.r);
+        // ps.r = saturate(ps.r);
         return ps;
     }   
     ENDCG

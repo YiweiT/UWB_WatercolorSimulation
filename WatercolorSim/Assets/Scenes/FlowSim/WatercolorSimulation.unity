@@ -1371,9 +1371,8 @@ MonoBehaviour:
   pigSupplyShader: {fileID: 4800000, guid: 6d4cd38685c869141a5201ed0022c324, type: 3}
   pigAdvectShader: {fileID: 4800000, guid: 61dc07a1fefa34f4f930d712f9250d57, type: 3}
   pigFixtureShader: {fileID: 4800000, guid: 6b6f7085b62dff64ba5f04179b5dce22, type: 3}
-  kmShader: {fileID: 4800000, guid: 5cc6ee788a1f6b147a8774712e0cd5e0, type: 3}
   compShader: {fileID: 4800000, guid: 0ff7ee6e4b6d71a44a8c5b01cc3eb8e4, type: 3}
-  bgShader: {fileID: 4800000, guid: 5cc6ee788a1f6b147a8774712e0cd5e0, type: 3}
+  kmShader: {fileID: 4800000, guid: 5cc6ee788a1f6b147a8774712e0cd5e0, type: 3}
   canvasSize: 562
   _bgCol: 2
   bgOffset: 0.01
@@ -1386,9 +1385,9 @@ MonoBehaviour:
   - 1
   - 1
   waterBrush: 0
-  brushColor: 10
+  brushColor: 1
   brushSize: 10
-  pigmentAmount: 0.103
+  pigmentAmount: 0.528
   pigDropRate: 0.002
   waterAmount: 0.44
   heightUpperBound: 0.791

@@ -32,6 +32,8 @@ public class FlowSimController : MonoBehaviour
     // Save the display texture to png file
     public Button saveImgBtn;
     public InputField imgNameInput;
+    public Button saveHBtn;
+    public InputField heightInput;
     // display quads
     public GameObject quad, colQuad, displayQ;
     public GameObject[] objs = new GameObject[krt];
@@ -302,6 +304,9 @@ public class FlowSimController : MonoBehaviour
 
         // save image
         saveImgBtn.onClick.AddListener(SaveImg);
+
+        // save height
+        saveHBtn.onClick.AddListener(SaveHeight);
     }
 
     void SetQuadToPixelPerfect(GameObject q, RenderTexture rt)
@@ -432,8 +437,6 @@ public class FlowSimController : MonoBehaviour
         Graphics.Blit(rtc[0], rt[0]);
         Graphics.Blit(rtc[1], rt[1]);
         Graphics.Blit(rtc[3], rt[3]);
-
-        
     }
 
     void PigmentMovement()
@@ -613,6 +616,28 @@ public class FlowSimController : MonoBehaviour
         }
 
         File.WriteAllBytes(dirPath + imgNameInput.text + "_" + timeStamp + ".png", tex.EncodeToPNG());
+
+    }
+
+    void SaveHeight()
+    {
+        String dirPath = Application.dataPath + "/../SaveImages/";
+        if(!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        var oldRt = RenderTexture.active;
+        RenderTexture.active =debugRT[4];
+        Texture2D tex =  new Texture2D(debugRT[4].width,debugRT[4].height, TextureFormat.RGBAFloat, false, true);
+        tex.ReadPixels(new Rect(0, 0,debugRT[4].width,debugRT[4].height), 0, 0);
+        tex.Apply();
+        RenderTexture.active = oldRt;
+        // String timeStamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        
+        heightInput.text = "Height_" + heightLowerBound + "_" + heightUpperBound + "_" + heightScale;
+        
+
+        File.WriteAllBytes(dirPath + heightInput.text  + ".png", tex.EncodeToPNG());
 
     }
 
